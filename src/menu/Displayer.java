@@ -5,7 +5,9 @@
 package menu;
 
 import collection.RoomList;
+import collection.GuestList;
 import model.Room;
+import model.Guest;
 
 /**
  *
@@ -23,4 +25,28 @@ public class Displayer {
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
     }
 
+    public static void displayGuestInformation(String id) {
+        Guest g = GuestList.searchById(id);
+        Room r = RoomList.searchById(g.getGuestRoomId());
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Guest information [National ID: " + g.getGuestId() + "]");
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Full name    : " + g.getGuestName());
+        System.out.println("Phone number : " + g.getGuestPhoneNumber());
+        System.out.println("Birth day    : " + g.getGuestBirthdate());
+        System.out.println("Gender       : " + g.getGuestGender());
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Rental room  : " + g.getGuestRoomId());
+        System.out.println("Check in     : " + g.getStartDate());
+        System.out.println("Rental days  : " + g.getRentalDate());
+        System.out.println("Check out    : ");
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Room information:");
+        System.out.println("+ ID         : " + r.getRoomId());
+        System.out.println("+ Room       : " + r.getRoomName());
+        System.out.println("+ Type       : " + r.getRoomType());
+        System.out.println("+ Daly rate  : " + r.getRoomRate() + "$");
+        System.out.println("+ Capacity   : " + r.getRoomCapacity());
+        System.out.println("+ Funiture   : " + r.getFurnitureDescription());
+    }
 }

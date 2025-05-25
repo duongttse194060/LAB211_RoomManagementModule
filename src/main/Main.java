@@ -8,6 +8,7 @@ import java.util.Scanner;
 import menu.Menu;
 import collection.RoomList;
 import menu.Displayer;
+import collection.GuestList;
 
 /**
  *
@@ -31,16 +32,20 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    System.out.println("You choose option 1: Import Room Data from Text File. ");
+                    System.out.println("You choose option 1: Import Room Data From Text File. ");
                     RoomList.readFile();
                     break;
                 case 2:
-                    System.out.println("You choose option 2: Display available Room List. ");
+                    System.out.println("You choose option 2: Display Available Room List. ");
                     RoomList.displayAvailableRoom();
                     break;
                 case 3:
+                    System.out.println("You choose option 3: Enter Guest Information. ");
+                    GuestList.addGuest();
                     break;
                 case 4:
+                    System.out.println("You choose option 4: Update Guest Stay Information. ");
+                    GuestList.updateGuest();
                     break;
                 case 5:
                     break;

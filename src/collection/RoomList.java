@@ -121,4 +121,12 @@ public class RoomList {
         return false;
     }
 
+    public static Room searchById(String id) {
+        for (Room r : roomList) {
+            if (id.equals(r.getRoomId())) {
+                return r;
+            }
+        }
+        return null;
+    }
 }
