@@ -49,7 +49,7 @@ public class RoomList {
                     failCount++;
                     continue;
                 }
-                if (isDuplicatedRoomId(rm.getRoomId())) {
+                if (isExistRoomId(rm.getRoomId())) {
                     System.out.println("Error! RoomID must be unique. Line: " + line);
                     failCount++;
                     continue;
@@ -88,7 +88,7 @@ public class RoomList {
         Displayer.displayRoomList();
     }
 
-    public static boolean isDuplicatedRoomId(String id) {
+    public static boolean isExistRoomId(String id) {
         for (Room r : roomList) {
             if (id.equals(r.getRoomId())) {
                 return true;

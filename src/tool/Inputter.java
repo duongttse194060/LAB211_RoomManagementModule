@@ -35,7 +35,7 @@ public class Inputter {
         Scanner sc = new Scanner(System.in);
         String id;
         while (true) {
-            System.out.println("Enter guest National ID number: ");
+            System.out.println("Enter Guest National ID Number: ");
             id = sc.nextLine().trim();
             if (!isValid(id, Acceptable.NATIONAL_ID_VALID)) {
                 System.out.println("National ID number is invalid. Must be unique and include 12 digits");
@@ -52,7 +52,7 @@ public class Inputter {
         Scanner sc = new Scanner(System.in);
         String name;
         while (true) {
-            System.out.println("Enter guest full name: ");
+            System.out.println("Enter Guest Full Name: ");
             name = sc.nextLine().trim();
             if (isValid(name, Acceptable.FULLNAME_VALID)) {
                 break;
@@ -68,7 +68,7 @@ public class Inputter {
         String birthDate;
 
         while (true) {
-            System.out.println("Enter guest birthday (dd/MM/yyyy): ");
+            System.out.println("Enter Guest Birthday (dd/MM/yyyy): ");
             birthDate = sc.nextLine().trim();
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -91,7 +91,7 @@ public class Inputter {
         Scanner sc = new Scanner(System.in);
         String input;
         while (true) {
-            System.out.println("Enter Guest Gender (M for Male / F for Female): ");
+            System.out.println("Enter Guest Gender (M/F): ");
             input = sc.nextLine().trim();
             if (input.equalsIgnoreCase("M")) {
                 System.out.println("Guest Gender is Male. ");
@@ -130,8 +130,8 @@ public class Inputter {
                 System.out.println("Invalid Room ID format. Please try again.");
                 continue;
             }
-            if (!RoomList.isDuplicatedRoomId(roomId)) {  // ở đây dùng hàm này để kiểm tra tồn tại
-                System.out.println("Room ID does not exist. Please enter a valid room ID from the list.");
+            if (!RoomList.isExistRoomId(roomId)) {  // ở đây dùng hàm này để kiểm tra tồn tại
+                System.out.println("Room ID does not exist. Please enter a valid Room ID from the list.");
                 continue;
             }
             break;
@@ -146,7 +146,7 @@ public class Inputter {
         int rentDate;
 
         while (true) {
-            System.out.println("Enter number of rental days (Positive Interger): ");
+            System.out.println("Enter Number Of Rental Days: ");
             input = sc.nextLine().trim();
             try {
                 rentDate = Integer.parseInt(input);
@@ -167,7 +167,7 @@ public class Inputter {
         String startDate;
 
         while (true) {
-            System.out.println("Enter the starting date in the format 'dd/MM/yyyy' to register: ");
+            System.out.println("Enter Start Date (dd/MM/yyyy): ");
             startDate = sc.nextLine().trim();
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -190,7 +190,7 @@ public class Inputter {
         Scanner sc = new Scanner(System.in);
         String input;
         while (true) {
-            System.out.println("Enter the name of co-teant (Optional - Press ENTER to skip): ");
+            System.out.println("Enter Co-teant Name (Optional - Press ENTER to skip): ");
             input = sc.nextLine().trim();
             if (input.isEmpty()) {
                 System.out.println("Skipping this part...");
@@ -204,4 +204,39 @@ public class Inputter {
         }
     }
 
+    public static boolean isValidStartDate(String date) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate inputDate = LocalDate.parse(date, formatter);
+            LocalDate today = LocalDate.now();
+            if (inputDate.isAfter(today)) {
+                return true;
+            } else if (inputDate.isEqual(today)) {
+                System.out.println("Start date cannot be today. Please choose a future date.");
+            } else {
+                System.out.println("Start date is invalid. Input date must be in the future (after today).");
+            }
+        } catch (DateTimeException e) {
+            System.out.println("Invalid date format, please try again (e.g., dd/MM/yyyy).");
+        }
+        return false;
+    }
+
+    public static boolean isValidBirthDate(String date) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate inputDate = LocalDate.parse(date, formatter);
+            LocalDate today = LocalDate.now();
+            if (inputDate.isBefore(today)) {
+                return true;
+            } else if (inputDate.isEqual(today)) {
+                System.out.println("Birthdate cannot be today. Please choose a past date.");
+            } else {
+                System.out.println("Birthdate is invalid. Input date must be in the past (before today).");
+            }
+        } catch (DateTimeException e) {
+            System.out.println("Invalid date format, please try again (e.g., dd/MM/yyyy).");
+        }
+        return false;
+    }
 }
