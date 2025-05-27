@@ -1,11 +1,11 @@
 Room Management Module – Resort Complex Management System
 
-Overview
+
 This module is a part of the Resort Complex Management System developed for ATZ Resort, which offers accommodation, dining, and wellness services. It focuses on managing room usage and guest stays within the resort.
 
 The project is developed using Object-Oriented Programming (OOP), and demonstrates core OOP principles such as abstraction, encapsulation, inheritance, and polymorphism.
 
-Key Features
+
 0. Import a sample customer list (Optional)
 1. Import Room Data from Text File
 2. Display Available Room List
