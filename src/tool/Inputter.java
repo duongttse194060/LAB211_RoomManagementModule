@@ -11,6 +11,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import collection.RoomList;
+import java.time.format.DateTimeFormatterBuilder;
 
 /**
  *
@@ -239,4 +240,15 @@ public class Inputter {
         }
         return false;
     }
+
+    public static boolean checkDateInPast(String date) {
+        try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate inputDate = LocalDate.parse(date, dtf);
+            return !inputDate.isAfter(LocalDate.now());
+        } catch (DateTimeException e) {
+            return false;
+        }
+    }
+
 }

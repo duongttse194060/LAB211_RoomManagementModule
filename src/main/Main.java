@@ -9,6 +9,7 @@ import menu.Menu;
 import collection.RoomList;
 import menu.Displayer;
 import collection.GuestList;
+import tool.Tester;
 
 /**
  *
@@ -17,7 +18,8 @@ import collection.GuestList;
 public class Main {
 
     public static void main(String[] args) {
-        int choice = 0;
+
+        int choice;
         Scanner sc = new Scanner(System.in);
 
         do {
@@ -31,6 +33,9 @@ public class Main {
             }
 
             switch (choice) {
+                case 0:
+                    Tester.addSampleGuests();
+                    break;
                 case 1:
                     System.out.println("You choose option 1: Import Room Data From Text File. ");
                     RoomList.readFile();
@@ -48,8 +53,12 @@ public class Main {
                     GuestList.updateGuest();
                     break;
                 case 5:
+                    System.out.println("You choose option 5: Search Guest By National ID. ");
+                    GuestList.searchGuestById();
                     break;
                 case 6:
+                    System.out.println("You choose option 6: Delete Guest Reservation Before Arrival. ");
+                    GuestList.removeGuestBooking();
                     break;
                 case 7:
                     break;
@@ -58,6 +67,10 @@ public class Main {
                 case 9:
                     break;
                 case 10:
+                    break;
+                case 11:
+                    System.out.println("Display Guest List Table");
+                    Displayer.displayGuestListTable();
                     break;
                 default:
                     System.out.println("Invalid choice. Program exited... ");

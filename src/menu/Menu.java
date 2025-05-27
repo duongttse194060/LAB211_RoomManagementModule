@@ -4,7 +4,6 @@ package menu;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author ADMIN
@@ -13,6 +12,7 @@ public class Menu {
 
     public static void function() {
         System.out.println("\n====================== ROOM MANAGEMENT MENU ======================");
+        System.out.println("0. Add a sample guest list (Optional)");
         System.out.println("1. Import Room Data from Text File");
         System.out.println("2. Display Available Room List");
         System.out.println("3. Enter Guest Information");
@@ -26,5 +26,5 @@ public class Menu {
         System.out.println("Other - Quit");
         System.out.println("===================================================================");
     }
-    
+
 }

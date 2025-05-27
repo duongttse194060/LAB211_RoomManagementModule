@@ -6,8 +6,11 @@ package menu;
 
 import collection.RoomList;
 import collection.GuestList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import model.Room;
 import model.Guest;
+import tool.Inputter;
 
 /**
  *
@@ -31,7 +34,7 @@ public class Displayer {
         System.out.println("----------------------------------------------------------------");
         System.out.println("Guest information [National ID: " + g.getGuestId() + "]");
         System.out.println("----------------------------------------------------------------");
-        System.out.println("Full name    : " + g.getGuestName());
+        System.out.println("Full name    : " + formatName(g.getGuestName()));
         System.out.println("Phone number : " + g.getGuestPhoneNumber());
         System.out.println("Birth day    : " + g.getGuestBirthdate());
         System.out.println("Gender       : " + g.getGuestGender());
@@ -39,7 +42,12 @@ public class Displayer {
         System.out.println("Rental room  : " + g.getGuestRoomId());
         System.out.println("Check in     : " + g.getStartDate());
         System.out.println("Rental days  : " + g.getRentalDate());
-        System.out.println("Check out    : ");
+        String checkOut = calculateCheckoutDate(g.getStartDate(), g.getRentalDate());
+        System.out.println("Check out    : " + checkOut);
+        if (g.getGuestRoomateName() != null && !g.getGuestRoomateName().trim().isEmpty()) {
+            String foundRoomate = formatName(g.getGuestRoomateName());
+            System.out.println("Co-tenant    : " + toTitleCase(foundRoomate));
+        }
         System.out.println("----------------------------------------------------------------");
         System.out.println("Room information:");
         System.out.println("+ ID         : " + r.getRoomId());
@@ -55,7 +63,7 @@ public class Displayer {
         Guest g = GuestList.searchById(id);
         Room r = RoomList.searchById(g.getGuestRoomId());
         System.out.println("+ Guest information: ");
-        System.out.println("+ Full name: " + g.getGuestName());
+        System.out.println("+ Full name: " + toTitleCase(g.getGuestName()));
         System.out.println("+ Phone number: " + g.getGuestPhoneNumber());
         System.out.println("+ Birth day: " + g.getGuestBirthdate());
         System.out.println("+ Gender: " + g.getGuestGender());
@@ -67,15 +75,15 @@ public class Displayer {
         if (foundRoomate == null || foundRoomate.isEmpty()) {
             System.out.println("This guest currently have no co-teant. ");
         } else {
-            System.out.println("+ Co-tenant name: " + foundRoomate);
+            System.out.println("+ Co-tenant name: " + toTitleCase(foundRoomate));
         }
     }
 
     public static void showGuestInfoAfterUpdate(String id) {
         Guest g = GuestList.searchById(id);
         Room r = RoomList.searchById(g.getGuestRoomId());
-        System.out.println("+ Guest information [National ID: " + g.getGuestId() + "] after update successfully: ");
-        System.out.println("+ Full name: " + g.getGuestName());
+        System.out.println("+ Guest information [National ID: " + g.getGuestId() + "] after updated: ");
+        System.out.println("+ Full name: " + toTitleCase(g.getGuestName()));
         System.out.println("+ Phone number: " + g.getGuestPhoneNumber());
         System.out.println("+ Birth day: " + g.getGuestBirthdate());
         System.out.println("+ Gender: " + g.getGuestGender());
@@ -87,8 +95,56 @@ public class Displayer {
         if (foundRoomate == null || foundRoomate.isEmpty()) {
             System.out.println("This guest currently have no co-teant. ");
         } else {
-            System.out.println("+ Co-tenant name: " + foundRoomate);
+            System.out.println("+ Co-tenant name: " + toTitleCase(foundRoomate));
         }
+    }
+
+    public static String toTitleCase(String str) {
+        if (str == null || str.trim().isEmpty()) {
+            return "";
+        }
+        String[] array = str.split(" ");
+        String result = "";
+
+        for (String word : array) {
+            if (word.trim().length() > 0) {
+                result += (word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase() + " ");
+            }
+        }
+        return result.trim();
+    }
+
+    public static String calculateCheckoutDate(String startDate, int rentalDays) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate start = LocalDate.parse(startDate, formatter);
+        LocalDate checkout = start.plusDays(rentalDays);
+        return checkout.format(formatter);
+    }
+
+    public static String formatName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return "";
+        }
+        name = toTitleCase(name);
+        String[] parts = name.split("\\s+");
+        if (parts.length > 1) {
+            name = name.trim().replaceAll("\\s+", " ");
+            int lastIndexOfSpace = name.lastIndexOf(" ");
+            String tempName = name.substring(lastIndexOfSpace + 1);
+            String others = name.substring(0, lastIndexOfSpace);
+            return tempName + ", " + others;
+        }
+        return name;
+    }
+
+    public static void displayGuestListTable() {
+        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
+        System.out.println("National ID          | Customer Name          | Birthdate   | Gender  | Phone Number      | Room ID  | Rental Days | Start Date   | Co-tenant      ");
+        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
+        for (Guest g : GuestList.guestList) {
+            System.out.println(g);
+        }
+        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
     }
 
 }
