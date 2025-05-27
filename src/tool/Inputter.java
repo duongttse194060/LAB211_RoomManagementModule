@@ -251,4 +251,18 @@ public class Inputter {
         }
     }
 
+    public static String inputTargetMonth() {
+        Scanner sc = new Scanner(System.in);
+        String targetMonth;
+        while (true) {
+            System.out.println("Input target month (MM/yyyy): ");
+            targetMonth = sc.nextLine().trim();
+            if (isValid(targetMonth, Acceptable.MONTH_YEAR_VALID)) {
+                break;
+            } else {
+                System.out.println("Invalid input format. Must be (MM/yyyy)");
+            }
+        }
+        return targetMonth;
+    }
 }

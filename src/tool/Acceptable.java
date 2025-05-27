@@ -19,4 +19,6 @@ public interface Acceptable {
     public static final String ROOM_ID_VALID = "^[A-Za-z][0-9]{0,4}$";
 
     public static final String DATE_VALID = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
+
+    public static final String MONTH_YEAR_VALID = "^(0[1-9]|1[0-2])/\\d{4}$";
 }

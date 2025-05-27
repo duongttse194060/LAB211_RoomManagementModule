@@ -24,7 +24,7 @@ public class Main {
 
         do {
             Menu.function();
-            System.out.print("Enter your choice (1-8): ");
+            System.out.print("Enter your choice (1-11): ");
             try {
                 choice = Integer.parseInt(sc.nextLine().trim());
             } catch (NumberFormatException e) {
@@ -33,9 +33,6 @@ public class Main {
             }
 
             switch (choice) {
-                case 0:
-                    Tester.addSampleGuests();
-                    break;
                 case 1:
                     System.out.println("You choose option 1: Import Room Data From Text File. ");
                     RoomList.readFile();
@@ -61,16 +58,19 @@ public class Main {
                     GuestList.removeGuestBooking();
                     break;
                 case 7:
+                    System.out.println("You choose option 7: List Vacant Rooms. ");
+                    Displayer.displayAvailableRoom();
                     break;
                 case 8:
+                    System.out.println("You choose option 8: Monthly Revenue Report. ");
+                    Displayer.displayMonthlyRevenueReport();
                     break;
                 case 9:
                     break;
                 case 10:
                     break;
                 case 11:
-                    System.out.println("Display Guest List Table");
-                    Displayer.displayGuestListTable();
+                    Menu.utilityMenu();
                     break;
                 default:
                     System.out.println("Invalid choice. Program exited... ");

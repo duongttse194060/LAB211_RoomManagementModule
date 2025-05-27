@@ -8,7 +8,7 @@ package model;
  *
  * @author ADMIN
  */
-public class Room {
+public class Room implements Comparable<Room> {
 
     private String roomId;
     private String roomName;
@@ -81,6 +81,11 @@ public class Room {
     public String toString() {
         return String.format("%-6s | %-17s | %-10s | %7s | %8s | %s",
                 roomId, roomName, roomType, roomRate, roomCapacity, furnitureDescription);
+    }
+
+    @Override
+    public int compareTo(Room other) {
+        return this.roomId.compareToIgnoreCase(other.roomId);
     }
 
 }

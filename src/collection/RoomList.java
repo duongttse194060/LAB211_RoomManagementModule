@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import menu.Displayer;
+import model.Guest;
+import collection.GuestList;
 
 /**
  *
@@ -129,4 +131,14 @@ public class RoomList {
         }
         return null;
     }
+
+    public static boolean isRoomAvailable(String roomId) {
+        for (Guest g : GuestList.guestList) {
+            if (roomId.equals(g.getGuestRoomId())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

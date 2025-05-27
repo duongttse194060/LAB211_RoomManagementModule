@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import model.Room;
 import model.Guest;
+import java.util.Collections;
+import java.util.ArrayList;
 import tool.Inputter;
 
 /**
@@ -17,17 +19,7 @@ import tool.Inputter;
  * @author ADMIN
  */
 public class Displayer {
-
-    public static void displayRoomList() {
-        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
-        System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
-        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
-        for (Room r : RoomList.roomList) {
-            System.out.println(r);
-        }
-        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
-    }
-
+    
     public static void displayGuestInformation(String id) {
         Guest g = GuestList.searchById(id);
         Room r = RoomList.searchById(g.getGuestRoomId());
@@ -58,7 +50,7 @@ public class Displayer {
         System.out.println("+ Funiture   : " + r.getFurnitureDescription());
         System.out.println("----------------------------------------------------------------");
     }
-
+    
     public static void showGuestInfo(String id) {
         Guest g = GuestList.searchById(id);
         Room r = RoomList.searchById(g.getGuestRoomId());
@@ -70,7 +62,7 @@ public class Displayer {
         System.out.println("+ Rental room: " + g.getGuestRoomId());
         System.out.println("+ Start date: " + g.getStartDate());
         System.out.println("+ Rental days: " + g.getRentalDate());
-
+        
         String foundRoomate = g.getGuestRoomateName();
         if (foundRoomate == null || foundRoomate.isEmpty()) {
             System.out.println("This guest currently have no co-teant. ");
@@ -78,7 +70,7 @@ public class Displayer {
             System.out.println("+ Co-tenant name: " + toTitleCase(foundRoomate));
         }
     }
-
+    
     public static void showGuestInfoAfterUpdate(String id) {
         Guest g = GuestList.searchById(id);
         Room r = RoomList.searchById(g.getGuestRoomId());
@@ -90,7 +82,7 @@ public class Displayer {
         System.out.println("+ Rental room: " + g.getGuestRoomId());
         System.out.println("+ Start date: " + g.getStartDate());
         System.out.println("+ Rental days: " + g.getRentalDate());
-
+        
         String foundRoomate = g.getGuestRoomateName();
         if (foundRoomate == null || foundRoomate.isEmpty()) {
             System.out.println("This guest currently have no co-teant. ");
@@ -98,14 +90,85 @@ public class Displayer {
             System.out.println("+ Co-tenant name: " + toTitleCase(foundRoomate));
         }
     }
-
+    
+    public static void displayRoomList() {
+        Collections.sort(RoomList.roomList);
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+        System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+        for (Room r : RoomList.roomList) {
+            System.out.println(r);
+        }
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+    }
+    
+    public static void displayAvailableRoom() {
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+        System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+        
+        int count = 0;
+        for (Room r : RoomList.roomList) {
+            if (RoomList.isRoomAvailable(r.getRoomId())) {
+                System.out.println(r);
+                count++;
+            }
+        }
+        if (count == 0) {
+            System.out.println("All rooms have currently been rented out; no rooms are available! ");
+        }
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+    }
+    
+    public static void displayMonthlyRevenueReport() {
+        Collections.sort(RoomList.roomList);
+        String targetMonth = Inputter.inputTargetMonth();
+        ArrayList<Guest> guestsInMonth = filterGuestListByMonth(targetMonth);
+        System.out.println("Monthly Revenue Report - '" + targetMonth + "'");
+        System.out.println("-------+-------------------+------------+--------------+-------------");
+        System.out.println("RoomID | Room Name         | Type       | Daily Rate   | Amount      ");
+        System.out.println("-------+-------------------+------------+--------------+-------------");
+        
+        boolean hasData = false;
+        
+        for (Room r : RoomList.roomList) {
+            double amount = calculateTotalAmount(r, guestsInMonth);
+            if (amount > 0) {
+                hasData = true;
+                
+                System.out.printf("%-6s | %-17s | %-10s | %12.2f | %11.2f%n",
+                        r.getRoomId(),
+                        r.getRoomName(),
+                        r.getRoomType(),
+                        Double.parseDouble(r.getRoomRate()),
+                        amount);
+            }
+        }
+        
+        if (!hasData) {
+            System.out.println("There is no data on guests who have rented rooms.");
+        }
+        
+        System.out.println("-------+-------------------+------------+--------------+-------------");
+    }
+    
+    public static void displayGuestListTable() {
+        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
+        System.out.println("National ID          | Customer Name          | Birthdate   | Gender  | Phone Number      | Room ID  | Rental Days | Start Date   | Co-tenant      ");
+        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
+        for (Guest g : GuestList.guestList) {
+            System.out.println(g);
+        }
+        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
+    }
+    
     public static String toTitleCase(String str) {
         if (str == null || str.trim().isEmpty()) {
             return "";
         }
         String[] array = str.split(" ");
         String result = "";
-
+        
         for (String word : array) {
             if (word.trim().length() > 0) {
                 result += (word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase() + " ");
@@ -113,14 +176,14 @@ public class Displayer {
         }
         return result.trim();
     }
-
+    
     public static String calculateCheckoutDate(String startDate, int rentalDays) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate start = LocalDate.parse(startDate, formatter);
         LocalDate checkout = start.plusDays(rentalDays);
         return checkout.format(formatter);
     }
-
+    
     public static String formatName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return "";
@@ -136,15 +199,37 @@ public class Displayer {
         }
         return name;
     }
-
-    public static void displayGuestListTable() {
-        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
-        System.out.println("National ID          | Customer Name          | Birthdate   | Gender  | Phone Number      | Room ID  | Rental Days | Start Date   | Co-tenant      ");
-        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
+    
+    public static ArrayList<Guest> filterGuestListByMonth(String targetMonth) {
+        
+        ArrayList<Guest> filterList = new ArrayList<>();
         for (Guest g : GuestList.guestList) {
-            System.out.println(g);
+            String startDate = g.getStartDate();
+            String monthYear = startDate.substring(3);
+            if (monthYear.equals(targetMonth)) {
+                filterList.add(g);
+            }
         }
-        System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
+        return filterList;
     }
-
+    
+    public static double calculateTotalAmount(Room room, ArrayList<Guest> guestsInMonth) {
+        double totalAmount = 0;
+        double roomRate;
+        try {
+            roomRate = Double.parseDouble(room.getRoomRate());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid room rate format for room: " + room.getRoomId());
+            return 0;
+        }
+        
+        for (Guest guest : guestsInMonth) {
+            if (guest.getGuestRoomId().equals(room.getRoomId())) {
+                int rentalDays = guest.getRentalDate();
+                totalAmount += rentalDays * roomRate;
+            }
+        }
+        return totalAmount;
+    }
+    
 }
