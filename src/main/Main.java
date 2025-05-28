@@ -66,6 +66,8 @@ public class Main {
                     Displayer.displayMonthlyRevenueReport();
                     break;
                 case 9:
+                    System.out.println("You choose option 9: Revenue Report By Room Type. ");
+                    Displayer.displayRevenueReportByRoomType();
                     break;
                 case 10:
                     break;

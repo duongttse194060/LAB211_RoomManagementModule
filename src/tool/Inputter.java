@@ -23,7 +23,7 @@ public class Inputter {
         return input.matches(pattern);
     }
 
-    public static boolean isDupplicatedId(String id, ArrayList<Guest> list) {
+    public static boolean isDuplicatedId(String id, ArrayList<Guest> list) {
         for (Guest g : list) {
             if (g.getGuestId().equalsIgnoreCase(id)) {
                 return true;
@@ -40,7 +40,7 @@ public class Inputter {
             id = sc.nextLine().trim();
             if (!isValid(id, Acceptable.NATIONAL_ID_VALID)) {
                 System.out.println("National ID number is invalid. Must be unique and include 12 digits");
-            } else if (isDupplicatedId(id, list)) {
+            } else if (isDuplicatedId(id, list)) {
                 System.out.println("National ID number is already used! Please try another one. ");
             } else {
                 break;
@@ -265,4 +265,6 @@ public class Inputter {
         }
         return targetMonth;
     }
+
+    
 }

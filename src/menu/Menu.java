@@ -35,14 +35,18 @@ public class Menu {
         String choice;
         while (true) {
             System.out.println("\n====================== UTILITY MANAGEMENT MENU ===================");
-            System.out.println("A. Import A Sample Guest List.");
-            System.out.println("B. Display All Guests Information.");
+            System.out.println("A. Import Sample Guest List 1.");
+            System.out.println("B. Import Sample Guest List 2.");
+            System.out.println("C. Display All Guests Information.");
             System.out.println("====================================================================");
             choice = sc.nextLine();
             if (choice.equalsIgnoreCase("a")) {
-                Tester.addSampleGuests();
+                Tester.addSampleGuests1();
                 break;
             } else if (choice.equalsIgnoreCase("b")) {
+                Tester.addSampleGuests2();
+                break;
+            } else if (choice.equalsIgnoreCase("c")) {
                 Displayer.displayGuestListTable();
                 break;
             } else {
