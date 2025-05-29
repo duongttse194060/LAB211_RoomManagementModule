@@ -1,5 +1,6 @@
 package menu;
 
+import collection.GuestList;
 import java.util.Scanner;
 import tool.Tester;
 
@@ -38,6 +39,7 @@ public class Menu {
             System.out.println("A. Import Sample Guest List 1.");
             System.out.println("B. Import Sample Guest List 2.");
             System.out.println("C. Display All Guests Information.");
+            System.out.println("D. Display Data From File.");
             System.out.println("====================================================================");
             choice = sc.nextLine();
             if (choice.equalsIgnoreCase("a")) {
@@ -48,6 +50,15 @@ public class Menu {
                 break;
             } else if (choice.equalsIgnoreCase("c")) {
                 Displayer.displayGuestListTable();
+                break;
+            } else if (choice.equalsIgnoreCase("d")) {
+                GuestList.readFromFile();
+                if (GuestList.guestList == null || GuestList.guestList.isEmpty()) {
+                    System.out.println("File guestInfo.dat currently have no data. Please try again");
+                } else {
+                    System.out.println("Display Guest List Information...");
+                    Displayer.displayGuestListTable();
+                }
                 break;
             } else {
                 System.out.println("Invalid input. Please try again. ");

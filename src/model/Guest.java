@@ -4,11 +4,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ADMIN
  */
-public class Guest {
+public class Guest implements Serializable{
 
     private String guestId;
     private String guestName;

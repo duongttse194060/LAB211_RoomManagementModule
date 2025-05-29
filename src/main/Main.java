@@ -18,7 +18,7 @@ import tool.Tester;
 public class Main {
 
     public static void main(String[] args) {
-
+        GuestList.readFromFile();
         int choice;
         Scanner sc = new Scanner(System.in);
 
@@ -39,7 +39,7 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("You choose option 2: Display Available Room List. ");
-                    RoomList.displayAvailableRoom();
+                    Displayer.displayRoomList();
                     break;
                 case 3:
                     System.out.println("You choose option 3: Enter Guest Information. ");
@@ -59,7 +59,7 @@ public class Main {
                     break;
                 case 7:
                     System.out.println("You choose option 7: List Vacant Rooms. ");
-                    Displayer.displayAvailableRoom();
+                    Displayer.displayVacantRoom();
                     break;
                 case 8:
                     System.out.println("You choose option 8: Monthly Revenue Report. ");
@@ -70,6 +70,8 @@ public class Main {
                     Displayer.displayRevenueReportByRoomType();
                     break;
                 case 10:
+                    System.out.println("You choose option 10: Save Guest Information. ");
+                    GuestList.saveData();
                     break;
                 case 11:
                     Menu.utilityMenu();
@@ -78,7 +80,6 @@ public class Main {
                     System.out.println("Invalid choice. Program exited... ");
                     return;
             }
-
         } while (true);
     }
 }

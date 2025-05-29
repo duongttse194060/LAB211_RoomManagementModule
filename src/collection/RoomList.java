@@ -81,15 +81,6 @@ public class RoomList {
         return roomList;
     }
 
-    public static void displayAvailableRoom() {
-        if (roomList.isEmpty()) {
-            System.out.println("Room list is currently empty, not loaded yet.");
-            return;
-        }
-        System.out.println("Print Available Room List...");
-        Displayer.displayRoomList();
-    }
-
     public static boolean isExistRoomId(String id) {
         for (Room r : roomList) {
             if (id.equals(r.getRoomId())) {

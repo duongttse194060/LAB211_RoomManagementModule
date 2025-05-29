@@ -93,7 +93,12 @@ public class Displayer {
     }
 
     public static void displayRoomList() {
+        if (RoomList.roomList.isEmpty()) {
+            System.out.println("Room List is curently empty, not loaded yet.");
+            return;
+        }
         Collections.sort(RoomList.roomList);
+        System.out.println("Print Available Room List ...");
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
         System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
@@ -103,7 +108,7 @@ public class Displayer {
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
     }
 
-    public static void displayAvailableRoom() {
+    public static void displayVacantRoom() {
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
         System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");

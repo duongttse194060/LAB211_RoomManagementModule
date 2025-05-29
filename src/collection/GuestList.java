@@ -10,6 +10,12 @@ import menu.Displayer;
 import model.Guest;
 import tool.Inputter;
 import tool.Acceptable;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
 
 /**
  *
@@ -341,5 +347,32 @@ public class GuestList {
         }
     }
 
+    public static void writeToFile() {
+        String filePath = "src/data/guestInfo.dat";
+        try ( FileOutputStream fos = new FileOutputStream(filePath);  ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(guestList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveData() {
+        writeToFile();
+        System.out.println("Guest information has been successfully saved to “guestInfo.dat”.");
+    }
+
+    public static void readFromFile() {
+        String filePath = "src/data/guestInfo.dat";
+        try ( FileInputStream fis = new FileInputStream(filePath);  ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            guestList = (ArrayList<Guest>) ois.readObject();
+            System.out.println("File guestInfo.dat loaded successfully...");
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File guestInfo.dat not found. Please try again.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
