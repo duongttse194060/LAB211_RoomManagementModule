@@ -98,7 +98,7 @@ public class Displayer {
             return;
         }
         Collections.sort(RoomList.roomList);
-        System.out.println("Print Available Room List ...");
+        System.out.println("Printing Room List ...");
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
         System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
@@ -109,6 +109,7 @@ public class Displayer {
     }
 
     public static void displayVacantRoom() {
+        Collections.sort(RoomList.roomList);
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
         System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
@@ -126,39 +127,8 @@ public class Displayer {
         System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
     }
 
-    public static void displayMonthlyRevenueReport() {
-        Collections.sort(RoomList.roomList);
-        String targetMonth = Inputter.inputTargetMonth();
-        ArrayList<Guest> guestsInMonth = filterGuestListByMonth(targetMonth);
-        System.out.println("Monthly Revenue Report - '" + targetMonth + "'");
-        System.out.println("-------+-------------------+------------+--------------+-------------");
-        System.out.println("RoomID | Room Name         | Type       | Daily Rate   | Amount      ");
-        System.out.println("-------+-------------------+------------+--------------+-------------");
-
-        boolean hasData = false;
-
-        for (Room r : RoomList.roomList) {
-            double amount = calculateTotalAmount(r, guestsInMonth);
-            if (amount > 0) {
-                hasData = true;
-
-                System.out.printf("%-6s | %-17s | %-10s | %12.2f | %11.2f%n",
-                        r.getRoomId(),
-                        r.getRoomName(),
-                        r.getRoomType(),
-                        Double.parseDouble(r.getRoomRate()),
-                        amount);
-            }
-        }
-
-        if (!hasData) {
-            System.out.println("There is no data on guests who have rented rooms.");
-        }
-
-        System.out.println("-------+-------------------+------------+--------------+-------------");
-    }
-
     public static void displayGuestListTable() {
+        Collections.sort(GuestList.guestList);
         System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
         System.out.println("National ID          | Customer Name          | Birthdate   | Gender  | Phone Number      | Room ID  | Rental Days | Start Date   | Co-tenant      ");
         System.out.println("---------------------+------------------------+-------------+---------+-------------------+----------+-------------+--------------+---------------+");
@@ -219,23 +189,55 @@ public class Displayer {
         return filterList;
     }
 
-    public static double calculateTotalAmount(Room room, ArrayList<Guest> guestsInMonth) {
+    public static double calculateTotalAmount(Room r, ArrayList<Guest> guestsInMonth) {
         double totalAmount = 0;
         double roomRate;
         try {
-            roomRate = Double.parseDouble(room.getRoomRate());
+            roomRate = Double.parseDouble(r.getRoomRate());
         } catch (NumberFormatException e) {
-            System.out.println("Invalid room rate format for room: " + room.getRoomId());
+            System.out.println("Invalid room rate format for room: " + r.getRoomId());
             return 0;
         }
 
-        for (Guest guest : guestsInMonth) {
-            if (guest.getGuestRoomId().equals(room.getRoomId())) {
-                int rentalDays = guest.getRentalDate();
+        for (Guest g : guestsInMonth) {
+            if (g.getGuestRoomId().equals(r.getRoomId())) {
+                int rentalDays = g.getRentalDate();
                 totalAmount += rentalDays * roomRate;
             }
         }
         return totalAmount;
+    }
+
+    public static void displayMonthlyRevenueReport() {
+        Collections.sort(RoomList.roomList);
+        String targetMonth = Inputter.inputTargetMonth();
+        ArrayList<Guest> guestsInMonth = filterGuestListByMonth(targetMonth);
+        System.out.println("Monthly Revenue Report - '" + targetMonth + "'");
+        System.out.println("-------+-------------------+------------+--------------+-------------");
+        System.out.println("RoomID | Room Name         | Type       | Daily Rate   | Amount      ");
+        System.out.println("-------+-------------------+------------+--------------+-------------");
+
+        boolean hasData = false;
+
+        for (Room r : RoomList.roomList) {
+            double amount = calculateTotalAmount(r, guestsInMonth);
+            if (amount > 0) {
+                hasData = true;
+
+                System.out.printf("%-6s | %-17s | %-10s | %12.2f | %11.2f%n",
+                        r.getRoomId(),
+                        r.getRoomName(),
+                        r.getRoomType(),
+                        Double.parseDouble(r.getRoomRate()),
+                        amount);
+            }
+        }
+
+        if (!hasData) {
+            System.out.println("There is no data on guests who have rented rooms.");
+        }
+
+        System.out.println("-------+-------------------+------------+--------------+-------------");
     }
 
     public static double calculateRevenueByRoomType(String targetRoomType) {
@@ -277,13 +279,13 @@ public class Displayer {
 
                 String roomType = "";
 
-                if (choice.equalsIgnoreCase("A")) {
+                if (choice.equalsIgnoreCase("a")) {
                     roomType = "Standard";
-                } else if (choice.equalsIgnoreCase("B")) {
+                } else if (choice.equalsIgnoreCase("b")) {
                     roomType = "Deluxe";
-                } else if (choice.equalsIgnoreCase("C")) {
+                } else if (choice.equalsIgnoreCase("c")) {
                     roomType = "Superior";
-                } else if (choice.equalsIgnoreCase("D")) {
+                } else if (choice.equalsIgnoreCase("d")) {
                     roomType = "Suite";
                 } else {
                     System.out.println("Invalid choice. Please choose A, B, C, or D.");
@@ -301,11 +303,11 @@ public class Displayer {
             while (true) {
                 System.out.print("Do you want to choose another Room Type? (Y/N): ");
                 String choice = sc.nextLine().trim();
-                if (choice.equalsIgnoreCase("N")) {
+                if (choice.equalsIgnoreCase("n")) {
                     System.out.println("Printing Revenue Report by Room Type.");
                     printRevenueReportFormat(selectedTypes);
                     return;
-                } else if (choice.equalsIgnoreCase("Y")) {
+                } else if (choice.equalsIgnoreCase("y")) {
                     break;
                 } else {
                     System.out.println("Invalid input. Please enter Y or N.");
@@ -327,10 +329,10 @@ public class Displayer {
 
         System.out.println("----------------------------");
     }
-    
+
 }
 
-/*In doanh thu theo từng loại phòng có chi tiết tên phòng ...
+/* In doanh thu theo từng loại phòng có chi tiết tên phòng ...
     
     public static double calculateRevenueByRoom(Room room) {
         double totalRevenue = 0;
@@ -346,7 +348,7 @@ public class Displayer {
 
     public static void printDetailedRevenueReportFormat(ArrayList<String> selectedType) {
         System.out.println("Detail Revenue Report By Room Type: ");
-        System.out.println("=========================================================================");
+        System.out.println("============================================================================================");
         for (String type : selectedType) {
             System.out.println("Room type: " + type);
             System.out.println("-------+-------------------+------------+---------+----------+--------------------------");
@@ -374,7 +376,7 @@ public class Displayer {
                 System.out.println("No revenue data available for this room type.");
             }
 
-            System.out.println("=========================================================================");
+            System.out.println("========================================================================================");
         }
     }
     

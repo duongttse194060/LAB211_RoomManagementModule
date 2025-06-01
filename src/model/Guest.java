@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author ADMIN
  */
-public class Guest implements Serializable{
+public class Guest implements Serializable, Comparable<Guest> {
 
     private String guestId;
     private String guestName;
@@ -114,6 +114,11 @@ public class Guest implements Serializable{
         return String.format("%-20s | %-22s | %-11s | %-7s | %-17s | %-8s | %-11s | %-12s | %-14s",
                 guestId, guestName, guestBirthdate, guestGender, guestPhoneNumber, guestRoomId,
                 rentalDate, startDate, guestRoomateName);
+    }
+
+    @Override
+    public int compareTo(Guest other) {
+        return this.guestId.compareToIgnoreCase(other.guestId);
     }
 
 }
