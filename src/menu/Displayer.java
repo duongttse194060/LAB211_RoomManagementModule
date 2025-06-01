@@ -315,9 +315,9 @@ public class Displayer {
     }
 
     public static void printRevenueReportFormat(ArrayList<String> selectedTypes) {
-        System.out.println("Revenue Report by Room Type");
+        System.out.println("Revenue Report by Room Type ");
         System.out.println("----------------------------");
-        System.out.println("Room Type  |  Amount      ");
+        System.out.println("Room Type  |  Amount        ");
         System.out.println("----------------------------");
 
         for (String type : selectedTypes) {
@@ -328,4 +328,105 @@ public class Displayer {
         System.out.println("----------------------------");
     }
 
+    /*In doanh thu theo từng loại phòng có chi tiết tên phòng ...
+    
+    public static double calculateRevenueByRoom(Room room) {
+        double totalRevenue = 0;
+        for (Guest g : GuestList.guestList) {
+            double roomRate = Double.parseDouble(room.getRoomRate());
+            if (g.getGuestRoomId().equals(room.getRoomId())) {
+                totalRevenue += roomRate * g.getRentalDate();
+            }
+        }
+
+        return totalRevenue;
+    }
+
+    public static void printDetailedRevenueReportFormat(ArrayList<String> selectedType) {
+        System.out.println("Detail Revenue Report By Room Type: ");
+        System.out.println("=========================================================================");
+        for (String type : selectedType) {
+            System.out.println("Room type: " + type);
+            System.out.println("-------+-------------------+------------+---------+----------+--------------------------");
+            System.out.println("RoomID | Room Name         | Amount     | Rate    | Capacity | Furniture");
+            System.out.println("-------+-------------------+------------+---------+----------+--------------------------");
+
+            boolean hasRoom = false;
+            for (Room r : RoomList.roomList) {
+                if (r.getRoomType().equals(type)) {
+                    double amount = calculateRevenueByRoom(r);
+                    if (amount > 0) {
+                        hasRoom = true;
+                        System.out.printf("%-6s | %-17s | $%10.2f | %7s | %-8s | %-20s\n",
+                                r.getRoomId(),
+                                r.getRoomName(),
+                                amount,
+                                r.getRoomRate(),
+                                r.getRoomCapacity(),
+                                r.getFurnitureDescription());
+                    }
+                }
+            }
+
+            if (!hasRoom) {
+                System.out.println("No revenue data available for this room type.");
+            }
+
+            System.out.println("=========================================================================");
+        }
+    }
+    
+    public static void displayDetailRevenueReportByRoomType() {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<String> selectedTypes = new ArrayList<>();
+
+        while (true) {
+
+            while (true) {
+                System.out.println("Input target Room Type to group and calculate Revenue Report.");
+                System.out.println("Enter A to choose Standard Room Type.");
+                System.out.println("Enter B to choose Deluxe Room Type.");
+                System.out.println("Enter C to choose Superior Room Type.");
+                System.out.println("Enter D to choose Suite Room Type.");
+                System.out.print("Your choice: ");
+                String choice = sc.nextLine().trim();
+
+                String roomType = "";
+
+                if (choice.equalsIgnoreCase("A")) {
+                    roomType = "Standard";
+                } else if (choice.equalsIgnoreCase("B")) {
+                    roomType = "Deluxe";
+                } else if (choice.equalsIgnoreCase("C")) {
+                    roomType = "Superior";
+                } else if (choice.equalsIgnoreCase("D")) {
+                    roomType = "Suite";
+                } else {
+                    System.out.println("Invalid choice. Please choose A, B, C, or D.");
+                    continue;
+                }
+
+                if (!selectedTypes.contains(roomType)) {
+                    selectedTypes.add(roomType);
+                } else {
+                    System.out.println("You already selected this room type.");
+                }
+                break;
+            }
+
+            while (true) {
+                System.out.print("Do you want to choose another Room Type? (Y/N): ");
+                String choice = sc.nextLine().trim();
+                if (choice.equalsIgnoreCase("N")) {
+                    System.out.println("Printing Revenue Report by Room Type.");
+                    printDetailedRevenueReportFormat(selectedTypes);
+                    return;
+                } else if (choice.equalsIgnoreCase("Y")) {
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter Y or N.");
+                }
+            }
+        }
+    }*/
 }
