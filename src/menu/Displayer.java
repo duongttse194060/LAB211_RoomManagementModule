@@ -327,8 +327,10 @@ public class Displayer {
 
         System.out.println("----------------------------");
     }
+    
+}
 
-    /*In doanh thu theo từng loại phòng có chi tiết tên phòng ...
+/*In doanh thu theo từng loại phòng có chi tiết tên phòng ...
     
     public static double calculateRevenueByRoom(Room room) {
         double totalRevenue = 0;
@@ -429,4 +431,3 @@ public class Displayer {
             }
         }
     }*/
-}
