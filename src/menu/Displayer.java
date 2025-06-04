@@ -330,10 +330,7 @@ public class Displayer {
         System.out.println("----------------------------");
     }
 
-}
-
-/* In doanh thu theo từng loại phòng có chi tiết tên phòng ...
-    
+    // Print detailed room list
     public static double calculateRevenueByRoom(Room room) {
         double totalRevenue = 0;
         for (Guest g : GuestList.guestList) {
@@ -379,7 +376,7 @@ public class Displayer {
             System.out.println("========================================================================================");
         }
     }
-    
+
     public static void displayDetailRevenueReportByRoomType() {
         Scanner sc = new Scanner(System.in);
         ArrayList<String> selectedTypes = new ArrayList<>();
@@ -397,13 +394,13 @@ public class Displayer {
 
                 String roomType = "";
 
-                if (choice.equalsIgnoreCase("A")) {
+                if (choice.equalsIgnoreCase("a")) {
                     roomType = "Standard";
-                } else if (choice.equalsIgnoreCase("B")) {
+                } else if (choice.equalsIgnoreCase("b")) {
                     roomType = "Deluxe";
-                } else if (choice.equalsIgnoreCase("C")) {
+                } else if (choice.equalsIgnoreCase("c")) {
                     roomType = "Superior";
-                } else if (choice.equalsIgnoreCase("D")) {
+                } else if (choice.equalsIgnoreCase("d")) {
                     roomType = "Suite";
                 } else {
                     System.out.println("Invalid choice. Please choose A, B, C, or D.");
@@ -432,4 +429,44 @@ public class Displayer {
                 }
             }
         }
-    }*/
+    }
+
+    public static void displayRoomListByRoomRate() {
+        Scanner sc = new Scanner(System.in);
+        double minRate = 0;
+        while (true) {
+            try {
+                System.out.println("Enter x:");
+                String input = sc.nextLine();
+                minRate = Double.parseDouble(input);
+                if (minRate < 0) {
+                    System.out.println("Invalid number, x must be a positive number");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input, x must be a number. ");
+            }
+        }
+        Collections.sort(RoomList.roomList);
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+        System.out.println("RoomID | Room Name         | Type       | Rate    | Capacity | Furniture");
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+
+        int count = 0;
+        for (Room r : RoomList.roomList) {
+            double roomRate = Double.parseDouble(r.getRoomRate());
+            if (roomRate >= minRate) {
+                System.out.println(r);
+                count++;
+            }
+        }
+        if (count == 0) {
+            System.out.println("All rooms have currently been rented out; no rooms are available! ");
+        } else {
+            System.out.println("There is: " + count + "Room");
+        }
+        System.out.println("-------+-------------------+------------+---------+----------+--------------------------------------------------");
+
+    }
+}

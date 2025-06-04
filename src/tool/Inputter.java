@@ -131,7 +131,7 @@ public class Inputter {
                 System.out.println("Invalid Room ID format. Please try again.");
                 continue;
             }
-            if (!RoomList.isExistRoomId(roomId)) {  // ở đây dùng hàm này để kiểm tra tồn tại
+            if (!RoomList.isExistRoomId(roomId)) {
                 System.out.println("Room ID does not exist. Please enter a valid Room ID from the list.");
                 continue;
             }
@@ -266,5 +266,4 @@ public class Inputter {
         return targetMonth;
     }
 
-    
 }

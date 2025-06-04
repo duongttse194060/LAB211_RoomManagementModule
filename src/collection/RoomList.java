@@ -10,9 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import menu.Displayer;
 import model.Guest;
-import collection.GuestList;
 
 /**
  *
@@ -27,6 +25,7 @@ public class RoomList {
         if (parts.length < 6) {
             return null;
         }
+
         return new Room(
                 parts[0].trim(),
                 parts[1].trim(),

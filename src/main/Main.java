@@ -76,6 +76,11 @@ public class Main {
                 case 11:
                     Menu.utilityMenu();
                     break;
+                case 12:
+                    // Thêm chức năng nhập 1 số x từ bàn phím, sau đó tìm và hiển thị các phòng có Room Rate lớn hơn hoặc bằng x
+                    // Và cho biết thêm có bao nhiêu phòng được hiển thị.
+                    Displayer.displayRoomListByRoomRate();
+                    break;
                 default:
                     System.out.println("Invalid choice. Program exited... ");
                     return;

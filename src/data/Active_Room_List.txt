@@ -16,3 +16,4 @@ R112; Seaside Corner; Standard; 92.00; 2; Twin beds, TV, Mini-bar
 R113; Golden Leaf; Superior; 130.00; 3; Queen bed, TV, Work desk, Balcony
 R114; Lavender Room; Standard; 89.00; 2; Double bed, TV, Coffee table
 R115; Pearl Suite; Suite; 210.00; 5; King bed, Sofa, Jacuzzi, Balcony, TV
+R116; Pearl Suite; Suite; 220.00; 5; King bed, Sofa, Jacuzzi, Balcony, TV
